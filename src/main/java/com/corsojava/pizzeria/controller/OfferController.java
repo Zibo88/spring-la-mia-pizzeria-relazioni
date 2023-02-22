@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,6 +66,26 @@ public class OfferController {
 		
 		offerRepository.save(offerForm);
 		return "redirect:/pizza";
+	}
+	
+	//edit
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") Integer id, Model model) {
+		Offer offerToUpdate = offerRepository.getReferenceById(id);
+		model.addAttribute("offerToUpdate",offerToUpdate);
+		return "offer/edit";
+	}
+	
+	@PostMapping("/edit/{id}")
+	public String update(@Valid @ModelAttribute("offerToUpdate") Offer offerForm,BindingResult bindingResult, Model model) {
+		
+		if(bindingResult.hasErrors()) {
+			return "offer/edit";
+		}
+		
+		offerRepository.save(offerForm);
+		
+		return "redirect:/pizza/{id}";
 	}
 
 }
