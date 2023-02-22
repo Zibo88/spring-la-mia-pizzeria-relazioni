@@ -83,9 +83,11 @@ public class OfferController {
 			return "offer/edit";
 		}
 		
+		Pizza pizza = offerForm.getPizza();
+		
 		offerRepository.save(offerForm);
 		
-		return "redirect:/pizza/{id}";
+		return "redirect:/pizza/" + pizza.getId();
 	}
 
 }
