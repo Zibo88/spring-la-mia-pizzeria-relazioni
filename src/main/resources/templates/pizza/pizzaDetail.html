@@ -23,15 +23,22 @@
 						
 						<div th:if="${pizza != null }" >
 								Offerte:
-							<div th:each="offer : ${pizza.offers}"> 
+							<div> 
 							
-    							<ul >
-									<li style="list-style-type: circle;" th:text="${offer.title}"></li>
+    							<ul  th:each="offer : ${pizza.offers}" >
+									
+									<li style="list-style-type: circle;"
+									 th:text="${offer.title} + ' ' + 'dal:' +' '+ ${offer.startDate} + ' ' + 'al:' + ${offer.endDate}" 
+									 > 
+									</li>
+									
+									<div> <a class="btn btn-primary" th:href="@{/offer/edit/{id}(id=${offer.id})}"> modifica offerta</a></div>
+									
 								</ul>
   
 							</div>
-							
-							<a th:href="@{|/offer/create?pizzaId=${pizza.getId()}|}" th:classAppend="${pizza.offers.size()} > 0 ? disabled : ' ' ">Nuova offerta</a>
+						
+							<a th:href="@{|/offer/create?pizzaId=${pizza.getId()}|}" th:classAppend="${pizza.offers.size()} > 0 ? disabled : ' ' ">Aggiungi offerta</a>
 							
 							<div th:if="${pizza.offers.size() == 0}">
 								<div>Nessuna offerta presente, clicca sul link per aggiungerne una</div>
