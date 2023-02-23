@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMax;
@@ -31,9 +32,8 @@ public class Pizza {
 	@Size(min=2, max=60) 
 	private String nome;
 	
-	@NotNull
-	@NotEmpty(message = "Il campo descrizione non può essere vuoto")
-	@Size(min=2, max=255) 
+	
+	@Size(max=255) 
 	private String descrizione;
 	
 	@NotNull
@@ -49,14 +49,9 @@ public class Pizza {
 	@OneToMany(mappedBy = "pizza")
 	private  List<Offer> offers; 
 	
+	@ManyToMany
+	private List<Ingredient> ingredients;
 	
-	public List<Offer> getOffers() {
-		return offers;
-	}
-
-	public void setOffers(List<Offer> offers) {
-		this.offers = offers;
-	}
 
 	public String getNome() {
 		return nome;
@@ -89,5 +84,21 @@ public class Pizza {
 	
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public List<Offer> getOffers() {
+		return offers;
+	}
+
+	public void setOffers(List<Offer> offers) {
+		this.offers = offers;
+	}
+
+	public List<Ingredient> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(List<Ingredient> ingredients) {
+		this.ingredients = ingredients;
 	}
 }
